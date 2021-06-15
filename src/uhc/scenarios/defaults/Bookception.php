@@ -68,7 +68,7 @@ class Bookception extends Scenario
                     }
                 }
             } else {
-                $living->dropItem($item);
+                $living->getLevel()->dropItem($living, $item);
             }
         }
     }
