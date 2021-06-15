@@ -85,7 +85,7 @@ class Radar extends Scenario
         $player = $event->getPlayer();
         $item = $player->getInventory()->getItemInHand();
 
-        if ($player instanceof GamePlayer && GameValues::$RUNNING >= GameValues::$GRACE_PERIOD) {
+        if ($player instanceof GamePlayer && $player->getData()->isAlive() && GameValues::$RUNNING >= GameValues::$GRACE_PERIOD) {
             if ($item->getId() == ItemIds::COMPASS && $action == $event::RIGHT_CLICK_AIR) {
                 $result = $this->findPlayer($player);
 
