@@ -194,7 +194,7 @@ class GamePlayer extends AddonPlayer
     private function setCoordinates(): void
     {
         $pk = new GameRulesChangedPacket();
-        $pk->gameRules = ['showCoordinates' => [1, true]];
+        $pk->gameRules = ['showCoordinates' => [1, true, true]];
         $this->directDataPacket($pk);
     }
 
