@@ -9,7 +9,6 @@ use pocketmine\entity\Living;
 use pocketmine\level\Level;
 use pocketmine\level\Location;
 use pocketmine\level\utils\SubChunkIteratorManager;
-use pocketmine\network\mcpe\protocol\FullChunkDataPacket;
 use pocketmine\network\mcpe\protocol\LevelChunkPacket;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
@@ -334,14 +333,7 @@ class BorderManager
 
                 foreach ($level->getChunkLoaders($x, $z) as $chunkLoader) {
                     if ($chunkLoader instanceof Player) {
-                        if (class_exists(FullChunkDataPacket::class)) {
-                            $pk = new FullChunkDataPacket();
-                            $pk->chunkX = $x;
-                            $pk->chunkZ = $z;
-                            $pk->data = $chunk->networkSerialize();
-                        } else {
-                            $pk = LevelChunkPacket::withoutCache($x, $z, $chunk->getSubChunkSendCount(), $chunk->networkSerialize());
-                        }
+                        $pk = LevelChunkPacket::withoutCache($x, $z, $chunk->getSubChunkSendCount() + 4, $chunk->networkSerialize($chunk->networkSerializeTiles()));
                         $chunkLoader->dataPacket($pk);
                     }
                 }
